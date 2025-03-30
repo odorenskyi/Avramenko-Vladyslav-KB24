@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1743361364 source:c:\users\vlad-avr-btmp\desktop\avramenko-vladyslav-kb24\lab08\prj\modulesavramenko\main.cpp
+	<cmath>
+	<stdexcept>
+

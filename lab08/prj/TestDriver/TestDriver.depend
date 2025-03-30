@@ -1,6 +1,7 @@
 # depslib dependency file v1.0
-1743361297 source:c:\users\vlad-avr-btmp\desktop\avramenko-vladyslav-kb24\lab08\prj\testdriver\main.cpp
+1743361592 source:c:\users\vlad-avr-btmp\desktop\avramenko-vladyslav-kb24\lab08\prj\testdriver\main.cpp
 	<iostream>
+	<sstream>
 	<iomanip>
 	<cmath>
 	"ModulesAvramenko.h"

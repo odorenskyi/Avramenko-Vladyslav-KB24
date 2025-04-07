@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1744052746 source:/home/mikroffarad/BMTP/Avramenko-Vladyslav-KB24/lab09/prj/Avramenko_task/main.cpp
+	<iostream>
+	"ModulesAvramenko.h"
+
+1744025500 /home/mikroffarad/BMTP/Avramenko-Vladyslav-KB24/lab08/prj/ModulesAvramenko.h
+

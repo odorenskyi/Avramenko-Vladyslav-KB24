@@ -1,8 +1,16 @@
-#include <cmath>
-#include <bitset>
-#include <string>
 #include <algorithm>
+#include <bitset>
+#include <cmath>
+#include <cctype>
+#include <ctime>
+#include <fstream>
 #include <stdexcept>
+#include <string>
+#include <iostream>
+#include <sstream>
+#include <vector>
+
+using namespace std;
 
 double s_calculation(double x, double y, double z) {
     // Перевірка на можливість ділення на нуль
@@ -66,4 +74,196 @@ int processBinary(unsigned int N) {
     return (((N >> 1) & 1) == 1) ?
            static_cast<int>(std::count(binary.begin(), binary.end(), '0')) :  // Якщо D₁ = 1, рахуємо нулі
            static_cast<int>(std::count(binary.begin(), binary.end(), '1'));   // Якщо D₁ = 0, рахуємо одиниці
+}
+
+// Функція для конвертації натурального числа b у двійковий рядок
+string ConvertToBinary(int b) {
+    if (b <= 0) return "0";
+    string binary = "";
+    while (b > 0) {
+        binary = to_string(b % 2) + binary;
+        b /= 2;
+    }
+    return binary;
+}
+
+// Функція для перевірки точного збігу слова (з урахуванням розділових знаків)
+bool ContainsWord(const string& text, const string& word) {
+    // Для простоти реалізації використаємо stringstream, розбиваючи текст на токени
+    istringstream iss(text);
+    string token;
+    while (iss >> token) {
+        // Видаляємо знаки пунктуації з початку та кінця токена
+        while (!token.empty() && ispunct(token.front())) {
+            token.erase(token.begin());
+        }
+        while (!token.empty() && ispunct(token.back())) {
+            token.pop_back();
+        }
+        // Перетворення до нижнього регістру для порівняння
+        string tokenLower = token;
+        string wordLower = word;
+        transform(tokenLower.begin(), tokenLower.end(), tokenLower.begin(), ::tolower);
+        transform(wordLower.begin(), wordLower.end(), wordLower.begin(), ::tolower);
+        if (tokenLower == wordLower) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// -------------------
+// Реалізація задачі 10.1
+// -------------------
+// Функція читає вхідний текстовий файл, підраховує символи та перевіряє наявність ключових слів.
+// Результати записуються у вихідний файл (якщо файл існує, вміст знищується).
+bool processTask10_1(const string& inputFile, const string& outputFile, const string& authorInfo) {
+    // Читання вхідного файлу
+    ifstream fin(inputFile);
+    if (!fin.is_open()) {
+        cerr << "Помилка: не вдалося відкрити файл " << inputFile << endl;
+        return false;
+    }
+    stringstream buffer;
+    buffer << fin.rdbuf();
+    string text = buffer.str();
+    fin.close();
+
+    // Підрахунок символів (включаючи пробіли та знаки пунктуації)
+    int charCount = text.size();
+
+    // Ключові слова для перевірки
+    vector<string> keywords = {"програма", "модуль", "студент", "програміст"};
+    // Створення повідомлень для кожного ключового слова
+    vector<string> keywordStatus;
+    for (const auto& key : keywords) {
+        if (ContainsWord(text, key)) {
+            keywordStatus.push_back("слово \"" + key + "\" присутнє");
+        } else {
+            keywordStatus.push_back("слово \"" + key + "\" відсутнє");
+        }
+    }
+
+    // Відкриваємо вихідний файл для запису (режим перезапису)
+    ofstream fout(outputFile, ios::out);
+    if (!fout.is_open()) {
+        cerr << "Помилка: не вдалося відкрити файл " << outputFile << " для запису." << endl;
+        return false;
+    }
+
+    // Запис авторської інформації
+    fout << "Автор: " << authorInfo << endl;
+    // Запис речення з кількістю символів
+    fout << "У файлі " << inputFile << " міститься " << charCount << " символів." << endl;
+    // Запис статусу ключових слів
+    for (const auto& status : keywordStatus) {
+        fout << status << "." << endl;
+    }
+
+    fout.close();
+    return true;
+}
+
+// -------------------
+// Реалізація задачі 10.2
+// -------------------
+// Функція відкриває вхідний файл для дозапису та дописує рядок, в якому вказано кількість цифр у файлі,
+// а також поточну дату і час дозапису.
+bool processTask10_2(const string& inputFile) {
+    // Читаємо вміст файлу для підрахунку цифр
+    ifstream fin(inputFile);
+    if (!fin.is_open()) {
+        cerr << "Помилка: не вдалося відкрити файл " << inputFile << " для читання." << endl;
+        return false;
+    }
+    stringstream buffer;
+    buffer << fin.rdbuf();
+    string text = buffer.str();
+    fin.close();
+
+    // Підрахунок цифр
+    int digitCount = 0;
+    for (char ch : text) {
+        if (isdigit(static_cast<unsigned char>(ch))) {
+            digitCount++;
+        }
+    }
+
+    // Отримання поточної дати і часу
+    time_t now = time(0);
+    char dt[100];
+    // Формат: "Дописано dd.mm.yyyy о hh:mm:ss"
+    strftime(dt, sizeof(dt), "Дописано %d.%m.%Y о %H:%M:%S", localtime(&now));
+
+    // Відкриваємо файл в режимі дозапису
+    ofstream fout(inputFile, ios::app);
+    if (!fout.is_open()) {
+        cerr << "Помилка: не вдалося відкрити файл " << inputFile << " для дозапису." << endl;
+        return false;
+    }
+
+    // Формування рядка для дозапису
+    fout << endl << "У файлі " << inputFile << " міститься " << digitCount << " цифр." << endl;
+    fout << dt << endl;
+
+    fout.close();
+    return true;
+}
+
+// -------------------
+// Реалізація задачі 10.3
+// -------------------
+// Функція приймає числові значення x, y, z та натуральне число b, викликає функцію s_calculation,
+// конвертує число b у двійковий запис та записує результати у вихідний файл.
+bool processTask10_3(const string& outputFile, double x, double y, double z, int b) {
+    // Виклик функції s_calculation
+    double result = s_calculation(x, y, z);
+
+    // Отримання двійкового представлення числа b
+    string binaryStr = ConvertToBinary(b);
+
+    // Відкриття вихідного файлу (режим перезапису)
+    ofstream fout(outputFile, ios::out);
+    if (!fout.is_open()) {
+        cerr << "Помилка: не вдалося відкрити файл " << outputFile << " для запису." << endl;
+        return false;
+    }
+
+    // Запис результатів:
+    fout << "Результат роботи функції s_calculation(" << x << ", " << y << ", " << z << ") = " << result << endl;
+    fout << "Число " << b << " у двійковому коді: " << binaryStr << endl;
+
+    fout.close();
+    return true;
+}
+
+// -------------------
+// Головна функція (main)
+// -------------------
+int main() {
+    // Демонстрація викликів модулів задач 10.1, 10.2 та 10.3.
+
+    // Задача 10.1
+    string inFile10_1 = "Input10_1.txt";   // Ім'я вхідного файлу (створіть його за допомогою текстового редактора)
+    string outFile10_1 = "Output10_1.txt";   // Ім'я вихідного файлу
+    string authorInfo = "Іван Іваненко, КПІ, Київ, Україна, 2025";
+    if (processTask10_1(inFile10_1, outFile10_1, authorInfo)) {
+        cout << "Задача 10.1 виконана успішно." << endl;
+    }
+
+    // Задача 10.2
+    string inFile10_2 = "Input10_2.txt";   // Ім'я вхідного файлу для дописування
+    if (processTask10_2(inFile10_2)) {
+        cout << "Задача 10.2 виконана успішно." << endl;
+    }
+
+    // Задача 10.3
+    string outFile10_3 = "Output10_3.txt"; // Ім'я вихідного файлу
+    double x = 3.0, y = 4.0, z = 5.0;
+    int b = 13;
+    if (processTask10_3(outFile10_3, x, y, z, b)) {
+        cout << "Задача 10.3 виконана успішно." << endl;
+    }
+
+    return 0;
 }

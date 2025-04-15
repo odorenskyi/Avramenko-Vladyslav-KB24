@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1744744237 source:c:\users\mikroffarad\mikroffarad\development\bmtp\avramenko-vladyslav-kb24\lab10\prj\testdriver\main.cpp
+	<iostream>
+	<fstream>
+	<sstream>
+	<string>
+	<ctime>
+	<cctype>
+	<vector>
+	<algorithm>
+	"ModulesAvramenko.h"
+
+1744744021 c:\users\mikroffarad\mikroffarad\development\bmtp\avramenko-vladyslav-kb24\lab08\prj\modulesavramenko.h
+

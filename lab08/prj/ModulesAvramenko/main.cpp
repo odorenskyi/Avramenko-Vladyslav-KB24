@@ -236,34 +236,3 @@ bool processTask10_3(const string& outputFile, double x, double y, double z, int
     fout.close();
     return true;
 }
-
-// -------------------
-// Головна функція (main)
-// -------------------
-int main() {
-    // Демонстрація викликів модулів задач 10.1, 10.2 та 10.3.
-
-    // Задача 10.1
-    string inFile10_1 = "Input10_1.txt";   // Ім'я вхідного файлу (створіть його за допомогою текстового редактора)
-    string outFile10_1 = "Output10_1.txt";   // Ім'я вихідного файлу
-    string authorInfo = "Іван Іваненко, КПІ, Київ, Україна, 2025";
-    if (processTask10_1(inFile10_1, outFile10_1, authorInfo)) {
-        cout << "Задача 10.1 виконана успішно." << endl;
-    }
-
-    // Задача 10.2
-    string inFile10_2 = "Input10_2.txt";   // Ім'я вхідного файлу для дописування
-    if (processTask10_2(inFile10_2)) {
-        cout << "Задача 10.2 виконана успішно." << endl;
-    }
-
-    // Задача 10.3
-    string outFile10_3 = "Output10_3.txt"; // Ім'я вихідного файлу
-    double x = 3.0, y = 4.0, z = 5.0;
-    int b = 13;
-    if (processTask10_3(outFile10_3, x, y, z, b)) {
-        cout << "Задача 10.3 виконана успішно." << endl;
-    }
-
-    return 0;
-}

@@ -118,7 +118,7 @@ int main() {
     vector<TestCase10_2> tests10_2 = {
         { "Input10_2_A.txt",
           "Лабораторна робота з базових технологій 12345",
-          "Цифр" }
+          "У файлі Input10_2_A.txt міститься 5 цифр." }
     };
 
     for (size_t i = 0; i < tests10_2.size(); i++) {

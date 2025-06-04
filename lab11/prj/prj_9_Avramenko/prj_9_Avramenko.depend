@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1749063410 source:c:\users\administrator\mikroffarad\development\avramenko-vladyslav-kb24\lab11\prj\prj_9_avramenko\main.cpp
+	"struct_type_project_9.h"
+	<iostream>
+	<string>
+	<limits>
+
+1749055112 c:\users\administrator\mikroffarad\development\avramenko-vladyslav-kb24\lab11\prj\struct_type_project_9.h
+	<string>
+	<iostream>
+	<fstream>
+	<limits>
+

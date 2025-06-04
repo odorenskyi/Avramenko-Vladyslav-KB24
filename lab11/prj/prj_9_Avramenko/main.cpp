@@ -34,7 +34,7 @@ int main() {
 
     // Головний цикл програми
     while (running) {
-        system("clear"); // Для Linux/Mac, використовуйте system("cls") для Windows
+        system("clear");
         showHeader();
         displayMenu();
 

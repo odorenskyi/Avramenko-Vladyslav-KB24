@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <limits>
 
 using namespace std;
 
@@ -33,21 +34,27 @@ struct EducationalInstitution {
                               foundationYear(0), next(nullptr) {}
 };
 
-// Прототипи функцій для роботи з динамічною структурою даних
-
 // Функції Авраменко
 EducationalInstitution* addRecord(EducationalInstitution* head);
 EducationalInstitution* loadFromFile(const string& filename);
+bool codeExists(EducationalInstitution* head, int code);
 
 // Функції Ковальчук
 EducationalInstitution* searchByCode(EducationalInstitution* head, int code);
 void displayRegistry(EducationalInstitution* head, const string& outputFile = "");
+void displaySingleRecord(EducationalInstitution* institution);
+void displaySingleRecordToFile(EducationalInstitution* institution, ofstream& file);
+void interactiveSearch(EducationalInstitution* head);
 
 // Функції Терещенко
 EducationalInstitution* deleteRecord(EducationalInstitution* head, int code);
 void saveToFile(EducationalInstitution* head, const string& filename);
+EducationalInstitution* interactiveDelete(EducationalInstitution* head);
+void autoSave(EducationalInstitution* head, const string& filename);
+void createBackup(EducationalInstitution* head, const string& backupFilename);
+bool validateDataIntegrity(EducationalInstitution* head);
 
-// Допоміжні функції
+// Допом
 void clearRegistry(EducationalInstitution* head);
 int getRegistrySize(EducationalInstitution* head);
 void displayMenu();
